@@ -1,0 +1,478 @@
+/* =========================================
+   1. VARIÁVEIS E RESET (A base de tudo)
+   ========================================= */
+:root {
+    --bg-main: #14181c;    /* Fundo Principal (Cinza Gamerboxd) */
+    --bg-card: #1e232b;    /* Fundo dos Cards/Modal */
+    --text-main: #99aabb;  /* Texto Padrão */
+    --text-white: #ffffff; /* Títulos */
+    --accent-green: #00e054; /* Verde (Ação/Review) */
+    --accent-orange: #ff8000; /* Laranja (Estrelas) */
+    --accent-blue: #40bcf4;   /* Azul (Editar) */
+    --accent-red: #ff4444;    /* Vermelho (Remover) */
+    --font-main: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box; /* Garante que tamanhos não quebrem */
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   2. NAVBAR (O Menu do Topo)
+   ========================================= */
+.navbar {
+    background-color: #14181c; /* Mesmo do fundo pra ficar clean */
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #2c3440;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    color: var(--text-white);
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -1px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Os 3 pontinhos clássicos */
+.dots { display: flex; gap: 5px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.green { background-color: var(--accent-green); }
+.orange { background-color: var(--accent-orange); }
+.blue { background-color: var(--accent-blue); }
+
+/* Links do Menu (Minhas Reviews) */
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link:hover { color: var(--text-white); }
+
+/* Barra de Pesquisa */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #1a1f2b;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    color: #eff6ff;
+    padding: 8px;
+    outline: none;
+    width: 200px;
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 1rem;
+}
+.search-box button:hover { color: white; }
+
+/* =========================================
+   3. GRID DE JOGOS (Catálogo e Diário)
+   ========================================= */
+.content-section {
+    padding: 40px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--text-main);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+.section-header h2 { margin: 0 15px 0 0; }
+.section-header hr { flex-grow: 1; border: 0; border-top: 1px solid #2c3440; }
+
+.poster-grid {
+    display: grid;
+    /* Responsivo: cria colunas automáticas de min 160px */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+    gap: 20px;
+}
+
+/* =========================================
+   4. CARDS DOS JOGOS (O Visual do Poster)
+   ========================================= */
+.game-card {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg-card);
+    transition: transform 0.2s, box-shadow 0.2s;
+    aspect-ratio: 2 / 3; /* Força formato de poster */
+    cursor: pointer;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    z-index: 10;
+    outline: 2px solid var(--accent-green); /* Borda verde ao passar o mouse */
+}
+
+.game-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* O "Escuro" que aparece por cima */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85); /* Fundo bem escuro */
+    opacity: 0; /* Invisível por padrão */
+    transition: opacity 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+}
+
+.game-card:hover .card-overlay { opacity: 1; }
+
+.game-title {
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Botão "REVIEW +" (Hover do catálogo) */
+.btn-overlay {
+    background: var(--accent-green);
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+.btn-overlay:hover { filter: brightness(1.2); }
+
+/* Nota no canto (Estrelinhas) */
+.user-rating-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.8);
+    padding: 3px 6px;
+    border-radius: 4px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ÍCONES DE AÇÃO (Lápis e Lixo) */
+.card-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    padding: 5px;
+}
+.btn-icon:hover { transform: scale(1.2); }
+
+.btn-icon.edit { color: var(--accent-blue); }
+.btn-icon.edit:hover { color: white; }
+
+.btn-icon.delete { color: var(--accent-red); }
+.btn-icon.delete:hover { color: white; }
+
+
+/* =========================================
+   5. TELA DE REVIEW (O Modal Estilo Cinema)
+   ========================================= */
+.review-screen {
+    display: none; /* Escondido */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Fundo quase preto */
+    backdrop-filter: blur(5px); /* Efeito Blur */
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.review-container {
+    background-color: var(--bg-card);
+    width: 90%;
+    max-width: 900px; /* Largura máxima confortável */
+    margin: 5vh auto; /* Centraliza verticalmente */
+    border-radius: 8px;
+    display: flex; /* Coluna Esquerda | Coluna Direita */
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    border: 1px solid #36404d;
+    position: relative;
+}
+
+/* COLUNA ESQUERDA (IMAGEM) */
+.review-cover {
+    width: 350px; /* Largura fixa da capa */
+    flex-shrink: 0;
+    background: #000;
+}
+
+.review-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* A imagem preenche tudo */
+    display: block;
+    opacity: 0.9;
+}
+
+/* COLUNA DIREITA (FORMULÁRIO) */
+.review-details {
+    padding: 40px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Botão Fechar (X) */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: var(--text-main);
+    cursor: pointer;
+    line-height: 1;
+    z-index: 10;
+}
+.close-btn:hover { color: white; }
+
+/* Título do Jogo no Modal */
+#review-game-title {
+    font-size: 2rem;
+    color: white;
+    margin: 0 0 5px 0;
+    line-height: 1.1;
+}
+
+.review-details label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    font-weight: 700;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Estrelas Interativas */
+.star-rating {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #445566;
+}
+.star-rating i:hover, .star-rating i.fas {
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px rgba(255, 128, 0, 0.3);
+}
+
+/* Caixa de Texto */
+#user-review {
+    background-color: #14181c;
+    border: 1px solid #36404d;
+    border-radius: 4px;
+    color: #e0e0e0;
+    padding: 15px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    resize: none;
+    height: 150px;
+    width: 100%;
+}
+#user-review:focus { outline: 1px solid var(--accent-green); }
+
+/* Botão de Salvar */
+.btn-action {
+    margin-top: 30px;
+    background: var(--accent-green);
+    color: #051a0d;
+    font-weight: 800;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    align-self: flex-start; /* Alinha à esquerda */
+    width: 100%;
+}
+.btn-action:hover {
+    background: #00ff62;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   6. MOBILE (Pra não quebrar no celular)
+   ========================================= */
+@media (max-width: 768px) {
+    .review-container {
+        flex-direction: column; /* Vira coluna única */
+        height: 90vh; /* Ocupa a tela quase toda */
+        overflow-y: scroll; /* Scroll interno */
+    }
+
+    .review-cover {
+        width: 100%;
+        height: 200px; /* Capa vira banner */
+    }
+
+    .review-details {
+        padding: 20px;
+    }
+
+    #review-game-title { font-size: 1.5rem; }
+    
+    .poster-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+/* --- ESTILO DO CHECKBOX PLATINA --- */
+.platinum-wrapper {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.platinum-wrapper input[type="checkbox"] {
+    display: none; /* Esconde a caixinha feia padrão */
+}
+
+.platinum-wrapper label {
+    font-size: 0.9rem !important;
+    background: #2c3440;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid #445566;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-main);
+    transition: 0.3s;
+    margin: 0 !important; /* Reseta margem padrão */
+}
+
+/* Quando marcado: Fica Dourado */
+.platinum-wrapper input:checked + label {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: #ffd700;
+    color: #ffd700;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* O ícone do troféu no card */
+.trophy-badge {
+    color: #ffd700;
+    margin-left: 5px;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.8));
+    animation: popIn 0.5s ease;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Botão Quero Jogar (Azulzinho no Card) */
+.btn-wishlist {
+    background: #445566;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+.btn-wishlist:hover { background: var(--accent-blue); }
+.btn-wishlist.active { background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue); }
+
+/* Ajuste dos botões no card */
+.overlay-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}

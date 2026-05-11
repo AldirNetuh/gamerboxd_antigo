@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamerboxd • Seu Diário de Jogos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="logo-container">
+            <div class="dots">
+                <span class="dot green"></span>
+                <span class="dot orange"></span>
+                <span class="dot blue"></span>
+            </div>
+            <h1 class="logo">Gamerboxd</h1>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#" class="nav-link active" onclick="switchTab('diary')"><i class="fas fa-book-open"></i> Diário</a>
+            <a href="#" class="nav-link" onclick="switchTab('wishlist')"><i class="fas fa-clock"></i> Quero Jogar</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Buscar jogo...">
+            <button id="btn-search"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <div id="diary-section" class="content-section">
+        <div class="section-header">
+            <h2>MEU DIÁRIO</h2>
+            <hr>
+        </div>
+        <div id="favorites-container" class="grid-games poster-grid"></div>
+    </div>
+
+    <div id="wishlist-section" class="content-section" style="display: none;">
+        <div class="section-header">
+            <h2>QUERO JOGAR (BACKLOG)</h2>
+            <hr>
+        </div>
+        <div id="wishlist-container" class="grid-games poster-grid">
+            <p style="color: #666;">Nenhum jogo na lista de desejos</p>
+        </div>
+    </div>
+
+    <main id="catalog-section" class="content-section">
+        <div class="section-header">
+            <h2>CATÁLOGO GLOBAL</h2>
+            <hr>
+        </div>
+        <div id="game-container" class="grid-games poster-grid">
+            <p class="loading">Carregando catálogo...</p>
+        </div>
+    </main>
+
+    <div id="review-screen" class="review-screen">
+        <div class="review-container">
+            <span class="close-btn" onclick="closeReviewScreen()">&times;</span>
+            
+            <div class="review-cover">
+                <img id="review-game-cover" src="" alt="Capa do Jogo">
+            </div>
+            
+            <div class="review-details">
+                <h1 id="review-game-title">Nome do Jogo</h1>
+                
+                <div class="platinum-wrapper">
+                    <input type="checkbox" id="platinum-check">
+                    <label for="platinum-check"><i class="fas fa-trophy"></i> Platinado!</label>
+                </div>
+
+                <label>Sua Avaliação</label>
+                <div class="star-rating" id="star-rating">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                    <input type="hidden" id="selected-rating" value="0">
+                </div>
+                <span id="rating-text">Clique nas estrelas</span>
+                
+                <label>Análise Completa</label>
+                <textarea id="user-review" rows="8" placeholder="Escreve tudo o que achou... (Clique aqui para ler a review completa se estiver editando)"></textarea>
+                
+                <button id="btn-save-review" class="btn-action">SALVAR NO DIÁRIO</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
