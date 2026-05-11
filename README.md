@@ -1,4 +1,4 @@
-# 🎮 Gamerboxd
+# 🎮 Gamerboxd - Antigo
 
 Um diário de jogos pessoal inspirado no Letterboxd. O projeto consome a API da RAWG para buscar títulos e permite gerenciar seu backlog e suas reviews de forma simples e visual.
 
